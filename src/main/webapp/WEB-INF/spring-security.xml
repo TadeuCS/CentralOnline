@@ -6,14 +6,14 @@
              xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/security
-	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 	 
     <http auto-config="true" access-denied-page="/View/HomePage/Login.jsf">
-        <intercept-url pattern="/View/Administrador/**" access="ADMINISTRADOR" /> 
-        <intercept-url pattern="/View/Atendente/**" access="ATENDENTE" /> 
-        <intercept-url pattern="/View/Suporte/**" access="SUPORTE" /> 
+        <intercept-url pattern="/View/Administrador/**" access="ROLE_ADMINISTRADOR" /> 
+        <intercept-url pattern="/View/Atendente/**" access="ROLE_ATENDENTE" /> 
+        <intercept-url pattern="/View/Suporte/**" access="ROLE_SUPORTE" /> 
         <form-login login-page="/View/HomePage/Login.jsf" always-use-default-target="true"
-                              default-target-url="/View/HomePage/Login.jsf" authentication-failure-url="/View/HomePage/Login.jsf?login_error=1" /> 
+                              default-target-url="/View/HomePage/Principal.jsf" authentication-failure-url="/View/HomePage/Login.jsf?login_error=1" /> 
         <logout logout-success-url="/View/HomePage/Login.jsf" />
     </http>
 	 	
@@ -25,7 +25,7 @@
 	
     <authentication-manager>
         <authentication-provider>
-            <password-encoder hash="md5" />
+<!--            <password-encoder hash="md5" />-->
             <jdbc-user-service data-source-ref="dataSource"
                                            users-by-username-query="SELECT usuario,senha,1 as ativo from usuario WHERE usuario = ?"
                                            authorities-by-username-query="SELECT usuario,descricao from usuario as a inner join tipo_usuario as b on a.codtipousuario = b.codtipousuario WHERE usuario = ?" />
