@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/Template_Administrador.xhtml">
+            <ui:define name="centro">
+                <h:form>
+                    <h:panelGrid cellspacing="10">
+                        <p:panel header="Cadastro de Prioridade">
+                            <h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="Descrição:" for="descricao" />
+                                <p:inputText id="descricao" value="#{prioridadeMB.prioridade.descricao}" title="Descricao" required="true" requiredMessage="Descrição Inválida"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" style="float: right">
+                                <p:commandButton value="Cancelar"/>
+                                <p:commandButton value="Salvar"/>
+                            </h:panelGrid>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:dataTable value="#{prioridadeMB.listaPrioridades()}" var="item" emptyMessage="Lista vazia">
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Lista de Prioridades"/>
+                                </p:outputPanel>
+                            </f:facet>
+                            <p:column headerText="Código">
+                                <h:outputText value="#{item.codprioridade}"/>
+                            </p:column>
+                            <p:column headerText="Descrição">
+                                <h:outputText value="#{item.descricao}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

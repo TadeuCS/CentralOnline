@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/Template_Administrador.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="centro">
+        <h:form>
+            <p:panel header="Cadastro de Links">
+
+                <p:panelGrid >
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Descrição:" for="descricao" />
+                        <p:inputText id="descricao" value="#{linksMB.link.descricao}" title="Descricao" required="true" requiredMessage="Descrição Inválida"/>
+                        <p:outputLabel value="Codaplicativo:" for="codaplicativo" />
+                        <p:selectOneMenu id="codaplicativo" value="#{linksMB.link.codaplicativo}" required="true" requiredMessage="Aplicativo Inválido">
+                            <!-- TODO: update below reference to list of available items-->
+                            <f:selectItems value="#{fixme}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2" style="float: right">    
+                        <p:commandButton value="Cancelar"/>
+                        <p:commandButton value="Salvar"/>
+                    </p:panelGrid>
+                </p:panelGrid>
+
+            </p:panel>
+
+            <p:dataTable value="#{linksMB.listaLinks()}" var="item" emptyMessage="Lista vazia">
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="Lista de Links"/>
+                    </p:outputPanel>
+                </f:facet>
+                <p:column headerText="Código">
+                    <h:outputText value="#{item.codlinks}"/>
+                </p:column>
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{item.descricao}"/>
+                </p:column>
+                <p:column headerText="Aplicativo">
+                    <h:outputText value="#{item.codaplicativo}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

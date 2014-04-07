@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Central Online</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/Template_Atendente.xhtml">
+            <ui:define name="centro">
+                <h:form>
+                    <p:wizard>
+                        <p:tab id="personal" title="Dados Pessoais">
+                            <p:panel header="Cadastro de Clientes">
+                                <h:panelGrid columns="2" style="width: 80%;" cellspacing="5">
+                                    <p:outputLabel value="Referência:" for="referencia" style="float: right" />
+                                    <p:inputText id="referencia" value="#{clienteMB.cliente.referencia}" title="Referência" />
+                                    <p:outputLabel value="Razão Social:" for="razaoSocial" style="float: right"/>
+                                    <p:inputText id="razaoSocial" value="#{clienteMB.cliente.razaoSocial}" title="RazaoSocial" 
+                                                 required="true" requiredMessage="Razão Social Inválida" style="width: 100%"/>
+                                    <p:outputLabel value="Nome Fantasia:" for="nomeFantasia" style="float: right"/>
+                                    <p:inputText id="nomeFantasia" value="#{clienteMB.cliente.nomeFantasia}" title="NomeFantasia" 
+                                                 required="true" requiredMessage="Nome Fantasia Inválido" style="width: 80%"/>
+                                    <p:outputLabel value="Responsavel:" for="responsavel" style="float: right"/>
+                                    <p:inputText id="responsavel" value="#{clienteMB.cliente.responsavel}" title="Responsavel" required="true" requiredMessage="Responsável obrigatorio."/>
+                                    <p:outputLabel value="CPF/CNPJ:" for="cnpjCpf" style="float: right"/>
+                                    <p:inputText id="cnpjCpf" value="#{clienteMB.cliente.cnpjCpf}" title="CnpjCpf" 
+                                                 required="true" requiredMessage="CPF/CNPJ obrigatorio." style="text-align: center"/>
+                                    <p:outputLabel value="Inscrição Estadual:" for="inscricaoEstadual" style="float: right" />
+                                    <p:inputText id="inscricaoEstadual" value="#{clienteMB.cliente.inscricaoEstadual}" title="InscricaoEstadual" required="true" requiredMessage="Inscrição Estadual obrigatoria."/>
+                                    <p:outputLabel value="Contato:" for="contato" style="float: right" />
+                                    <p:inputText id="contato" value="#{clienteMB.cliente.contato}" title="Contato" />
+                                    <p:outputLabel value="Email:" for="email" style="float: right"/>
+                                    <p:inputText id="email" value="#{clienteMB.cliente.email}" title="Email" 
+                                                 required="true" requiredMessage="Email obrigatorio." style="width: 40%;"/>
+                                    <p:outputLabel value="Aplicativo:" for="txt_aplicativo" style="float: right"/>
+                                    <p:selectOneMenu id="txt_aplicativo" value="" style="width: 160px;">
+                                        <f:selectItem/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Data Atualização:" for="txt_dataAtualizacao" style="float: right"/>
+                                    <p:calendar id="txt_dataAtualizacao" value="#{clienteMB.cliente.dataAtualizacao}" title="Data ultima Atulização" effect="explode" pattern="dd/MM/yyyy HH:mm" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                                    </p:calendar>
+                                    <p:outputLabel value="Bloqueado:" for="bloqueado"  style="float: right"/>
+                                    <p:selectBooleanButton  id="bloqueado" value="#{clienteMB.cliente.bloqueado}" onLabel="Sim" offLabel="Não"
+                                                            onIcon="ui-icon-check" offIcon="ui-icon-close" required="true" requiredMessage="Status obrigatorio."/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Telefone">
+                            <p:panel>
+                                <h:panelGrid cellspacing="10">
+                                    <p:panel header="Cadastro de Telefones">
+                                        <h:panelGrid>
+                                            <h:panelGrid columns="2">
+                                                <p:outputLabel value="Telefone:" for="txt_telefone"/>
+                                                <p:inputMask mask="(999) 9999-9999" id="txt_telefone" value="#{clienteMB.telefone.telefone}" />
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="2" style="float: right">
+                                                <p:commandButton value="Cancelar"/>
+                                                <p:commandButton value="OK"/>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                    <p:dataTable value="#{clienteMB.listaDeTelefone()}" var="item" emptyMessage="Lista Vazia">
+                                        <f:facet name="Header">
+                                            <p:outputPanel>
+                                                <h:outputText value="Lista de Telefones"/>
+                                            </p:outputPanel>
+                                        </f:facet>
+                                        <p:column headerText="Código">
+                                            <h:outputText value="#{item.codtelefone}"/>
+                                        </p:column>
+                                        <p:column headerText="Telefone">
+                                            <h:outputText value="#{item.telefone}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Links">
+                            <p:panel>
+                                <h:panelGrid cellspacing="10">
+                                    <p:panel header="Cadastro de Links">
+                                        <h:panelGrid>
+                                            <h:panelGrid columns="2">
+                                                <p:outputLabel value="Descrição:" for="txt_descricao"/>
+                                                <h:panelGrid columns="2">
+                                                    <p:selectOneMenu value="" id="txt_descricao" style="width: 165px;">
+                                                        <f:selectItem/>
+                                                    </p:selectOneMenu>
+                                                    <p:button icon="ui-icon-newwin"/>
+                                                </h:panelGrid>
+                                                <p:outputLabel value="Quantidade:" for="txt_qtde"/>
+                                                <p:inputText value="#{clienteMB.aplicativoClientes.quantidade}" id="txt_qtde" />
+                                            </h:panelGrid>
+                                            <h:panelGrid columns="2" style="float: right">
+                                                <p:commandButton value="Cancelar"/>
+                                                <p:commandButton value="OK"/>
+                                            </h:panelGrid>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                    <p:dataTable value="#{clienteMB.listaDeLinks()}" var="item" emptyMessage="Lista Vazia">
+                                        <f:facet name="header">
+                                            <p:outputPanel>
+                                                <h:outputText value="Lista de Links"/>
+                                            </p:outputPanel>
+                                        </f:facet>
+                                        <p:column  headerText="Quantidade">
+                                            <h:outputText value="#{item.quantidade}"/>
+                                        </p:column>
+                                        <p:column headerText="Descrição">
+                                            <h:outputText value="#{item.descricao}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGrid>
+
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Mapa">
+                            <h:panelGrid columns="2" cellspacing="10">
+                                <a href="https://www.google.com.br/maps/dir//Olivet+Sistemas+-+Rua+Dona+Lu%C3%ADsa,+529,+MG,+38700-229/@-18.5950642,-46.5188422,17z/data=!4m9!4m8!1m0!1m5!1m1!1s0x94aef535729f9fad:0xc65fefc517b45418!2m2!1d-46.518076!2d-18.597402!3e0?hl=pt-BR" target="_blank">Buscar</a>
+                                <h:panelGroup>
+                                    <p:inputText value="#{clienteMB.mapa}" />
+                                    <p:commandButton value="Carregar" update="pnl_mapa" action="#{clienteMB.retornaMapa()}"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                            <p:panel id="pnl_mapa">
+                                <iframe src="#{clienteMB.mapa}" width="600" height="450" frameborder="0" style="border:0"></iframe>
+                            </p:panel>
+                            <h:panelGrid columns="2" style="float: right">
+                                <p:commandButton value="Cancelar"/>
+                                <p:commandButton value="Salvar"/>
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:wizard>  
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

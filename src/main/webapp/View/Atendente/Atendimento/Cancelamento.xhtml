@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/Template_Atendente.xhtml">
+            <ui:define name="centro">
+                <h:form>
+                    <p:dataTable value="#{atendimentoMB.listaDeAtendimentoByUsuario()}" var="item"  emptyMessage="Lista Vazia">
+                        <f:facet name="header">  
+                            <p:outputPanel>  
+                                <p:outputLabel value="Atendimentos Em Execução"/>
+                            </p:outputPanel>  
+                        </f:facet> 
+                        <p:column headerText="Codigo" filterMatchMode="startsWith">
+                            <h:outputText value="#{item.codatendimento}"/>
+                        </p:column>
+                        <p:column headerText="Data Agendamento">
+                            <h:outputText value="#{item.dataAgendamento}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Cliente">
+                            <h:outputText value="#{item.codcliente.nomeFantasia}"/>
+                        </p:column>
+                        <p:column headerText="Tipo Atendimento">
+                            <h:outputText value="#{item.codtipoatendimento.descricao}"/>
+                        </p:column>
+                        <p:column headerText="Prioridade">
+                            <h:outputText value="#{item.codprioridade.descricao}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Editar"/>
+                            <p:commandButton value="Cancelar"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

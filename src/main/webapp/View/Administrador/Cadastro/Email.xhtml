@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/Template_Administrador.xhtml">
+            <ui:define name="centro">
+                <h:form>
+                    <h:panelGrid cellspacing="10" style="width: 100%">
+                        <h:panelGrid cellspacing="5">
+                            <p:panel header="Cadastro de Email">
+                                <h:panelGrid columns="2" cellspacing="5">
+                                    <p:outputLabel value="Email:" for="email" style="float: right"/>
+                                    <p:inputText id="email" value="#{emailMB.email.email}" title="Email" required="true" requiredMessage="Email Inválido">
+                                        <f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+" />
+                                    </p:inputText>
+                                    <p:outputLabel value="Smtp:" for="smtp" style="float: right"/>
+                                    <p:inputText id="smtp" value="#{emailMB.email.smtp}" title="Smtp" required="true" requiredMessage="SMTP Inválido"/>
+                                    <p:outputLabel value="Porta:" for="porta" style="float: right"/>
+                                    <p:inputText id="porta" value="#{emailMB.email.porta}" title="Porta" required="true" requiredMessage="Porta Inválida"/>
+                                    <p:outputLabel value="Nome:" for="nome" style="float: right"/>
+                                    <p:inputText id="nome" value="#{emailMB.email.nome}" title="Nome" required="true" requiredMessage="Nome Inválido"/>
+                                    <p:outputLabel value="Senha:" for="senha" style="float: right"/>
+                                    <p:password id="senha" value="#{emailMB.email.senha}" title="Senha" 
+                                                required="true" requiredMessage="Senha Inválida" />
+                                    <p:outputLabel value="Assinatura:" for="assinatura" style="float: right"/>
+                                    <p:inputText id="assinatura" value="#{emailMB.email.assinatura}" title="Assinatura" />
+                                </h:panelGrid>
+                            </p:panel>
+                            <h:panelGroup style="float: right">
+                                <p:button value="Cancelar" outcome="/View/Administrador/Cadastro/Empresa.jsf"/>
+                                <p:commandButton value="Salvar" ajax="false"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <p:dataTable value="#{empresaMB.listaEmpresas()}" var="item">
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Lista de Empresas"/>
+                                </p:outputPanel>
+                            </f:facet>
+                            <p:column headerText="Nome Fantasia">
+                                <h:outputText value="#{item.nomeFantasia}"/>
+                            </p:column>
+                            <p:column headerText="CPF/CNPJ">
+                                <h:outputText value="#{item.cnpjCpf}"/>
+                            </p:column>
+                            <p:column headerText="Telefone">
+                                <h:outputText value="#{item.telefone}"/>
+                            </p:column>
+                            <p:column headerText="Email">
+                                <h:outputText value="#{item.codemail}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

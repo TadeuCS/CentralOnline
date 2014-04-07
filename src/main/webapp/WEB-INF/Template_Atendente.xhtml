@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="/css/default.css"/>
+        <h:outputStylesheet name="/css/cssLayout.css"/>
+        <link rel="shortcut icon" href="icon.ico" />
+        <title>Central Online - Atendente</title>
+    </h:head>
+
+    <h:body>
+        <h:form>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="190">
+                    <p:graphicImage url="/resources/img/Logotipo.png" height="160" title="Logo" alt="logo" style="margin-left: 5%"/>
+
+                    <p:panel header="Bem Vindo" style="float: right;">
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1" style="text-align: center;float: right;">
+                                <p:commandLink value="Tadeu"/>
+                                <p:graphicImage url="/resources/img/usuario_M.png" width="80" height="80" alt="usuario_M"/>
+                            </h:panelGrid>
+                            <h:panelGrid>
+                                <h:panelGroup>
+                                    <p:outputLabel value="Abertos:"/>
+                                    <p:outputLabel value="10000" />
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <p:outputLabel value="Concluídos:" />
+                                    <p:outputLabel value="10000"/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <p:outputLabel value="Pendentes:" />
+                                    <p:outputLabel value="10000" />
+                                </h:panelGroup>
+                                <h:panelGroup >
+                                    <p:button icon="ui-icon-pencil"/>
+                                    <p:button icon="ui-icon-power" outcome="/View/HomePage/Login.jsf" style="margin-left: 40%;margin-top: 10px; " />
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="250" style="text-align: center;">
+                    <p:accordionPanel>
+                        <p:tab title="Home">
+                            <a href="/CentralOnline/View/Atendente/index.jsf">Início</a>        
+                        </p:tab>
+                        <p:tab title="Cadastro">
+                            <a href="/CentralOnline/View/Atendente/Cadastro/Cliente.jsf">Cliente</a><p/>
+                            <a href="/CentralOnline/View/Atendente/Cadastro/Usuario.jsf">Usuário</a>
+                        </p:tab>
+                        <p:tab title="Consulta">
+                            <p:commandLink value="Atendimentos"/><p/>
+                            <p:commandLink value="Clientes"/><p/>
+                            <p:commandLink value="Usuarios"/>
+                        </p:tab>
+
+                        <p:tab title="Atendimento">
+                            <p:commandLink value="Abertura"/><p/>
+                            <p:commandLink value="Cancelamento"/>
+                        </p:tab>
+                        <p:tab title="Relatórios">
+                            <p:commandLink value="Atendimentos Analíticos"/><p/>
+                            <p:commandLink value="Atendimentos Sintéticos"/><p/>
+                            <p:commandLink value="Clientes Cadastrados"/>
+                        </p:tab>
+
+                        <p:tab title="Ultilitários">
+                            <p:commandLink value="ATS Informatica"/><p/>
+                            <p:commandLink value="Consulta CNPJ Estadual"/><p/>
+                            <p:commandLink value="Consulta CNPJ Federal"/><p/>
+                            <p:commandLink value="Contabilidade"/><p/>
+                            <p:commandLink value="NetSabe"/><p/>
+                            <p:commandLink value="Prefeitura"/><p/>
+                            <p:commandLink value="Santander"/>
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <ui:insert name="centro">
+                    </ui:insert>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="30" style="text-align: center">
+                    <p:outputLabel value="Central Online 1.0"/>
+                </p:layoutUnit>
+            </p:layout>
+
+        </h:form>
+    </h:body>
+
+</html>

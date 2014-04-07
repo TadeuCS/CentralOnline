@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="/css/default.css"/>
+        <h:outputStylesheet name="/css/cssLayout.css"/>
+        <link rel="shortcut icon" href="/icon.ico" />
+        <title>Central Online - Suporte</title>
+    </h:head>
+
+    <h:body>
+        <h:form>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="190">
+                    <p:graphicImage url="/resources/img/Logotipo.png" height="160" title="Logo" alt="logo" style="margin-left: 5%"/>
+
+                    <p:panel header="Bem Vindo" style="float: right;">
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="1" style="text-align: center;float: right;">
+                                <p:commandLink value="Tadeu"/>
+                                <p:graphicImage url="/resources/img/usuario_M.png" width="80" height="80" alt="usuario_M"/>
+                            </h:panelGrid>
+                            <h:panelGrid>
+                                <h:panelGroup>
+                                    <p:outputLabel value="Abertos:"/>
+                                    <p:outputLabel value="10000" />
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <p:outputLabel value="Concluídos:" />
+                                    <p:outputLabel value="10000"/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <p:outputLabel value="Pendentes:" />
+                                    <p:outputLabel value="10000" />
+                                </h:panelGroup>
+                                <h:panelGroup >
+                                    <p:button icon="ui-icon-pencil" outcome="/View/Suporte/Consulta/Usuario.jsf"/>
+                                    <p:button icon="ui-icon-power" outcome="/View/HomePage/Login.jsf" style="margin-left: 40%;margin-top: 10px; " />
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </p:panel>
+
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="250" style="text-align: center;">
+
+                    <p:accordionPanel>
+                        <p:tab title="Home">
+                            <a href="/CentralOnline/View/Suporte/index.jsf">Início</a>        
+                        </p:tab>
+                        <p:tab title="Consulta">
+                            <a href="/CentralOnline/View/Suporte/Consulta/Atendimentos.jsf">Atendimentos</a><p/>
+                            <a href="/CentralOnline/View/Suporte/Consulta/Clientes.jsf">Clientes</a>
+                        </p:tab>
+
+                        <p:tab title="Atendimento">
+                            <a href="/CentralOnline/View/Suporte/Atendimento/Abertura.jsf">Abertura</a><p/>
+                            <a href="/CentralOnline/View/Suporte/Atendimento/Concluidos.jsf">Concluídos</a><p/>
+                            <a href="/CentralOnline/View/Suporte/Atendimento/Pendentes.jsf">Pendentes</a>
+                        </p:tab>
+
+                        <p:tab title="Ultilitários">
+                            <a href="http://www.nfe.fazenda.gov.br/PORTAL/disponibilidade.aspx?versao=2.00" target="_blank">Disponibilidade NFe</a><p/>
+                            <a href="http://nfe.fazenda.mg.gov.br/consulta/Welcome.do;jsessionid=EDA4767C7749474B012F60C7C7D27FE5.nfenode211" target="_blank">Consulta NFe Estadual</a><p/>
+                            <a href="http://www.nfe.fazenda.gov.br/PORTAL/consulta.aspx?tipoConsulta=completa" target="_blank">Consulta NFe Federal</a><p/>
+                            <a href="http://www.webdanfe.com.br/danfe/index.html" target="_blank">WEB Danfe</a>
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="east" size="200" header="Pendências" style="text-align: center">  
+
+                    <p:dataGrid var="pendencias" value="" columns="1" rows="3" paginator="true"> 
+                        <p:panel header="Pendencia 1">  
+                            <h:panelGrid columns="1" style="width:100%">  
+                                <h:outputText value="Cliente 1" />  
+                                <p:commandButton value="Visualisar"/>
+                            </h:panelGrid>  
+                        </p:panel>
+                        <p/>
+                        <p:panel header="Pendencia 2">  
+                            <h:panelGrid columns="1" style="width:100%">  
+                                <h:outputText value="Cliente 2" />  
+                                <p:commandButton value="Visualisar"/>
+                            </h:panelGrid>  
+                        </p:panel>
+                    </p:dataGrid> 
+                </p:layoutUnit>  
+
+
+                <p:layoutUnit position="center" id="center">
+                    <ui:insert name="centro">
+                    </ui:insert>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="30" style="text-align: center">
+                    <p:outputLabel value="Central Online 1.0"/>
+                </p:layoutUnit>
+            </p:layout>
+
+        </h:form>
+    </h:body>
+
+</html>

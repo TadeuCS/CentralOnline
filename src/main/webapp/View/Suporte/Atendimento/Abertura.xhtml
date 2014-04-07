@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link rel="shortcut icon" href="icon.ico" />
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/Template_Suporte.xhtml">
+            <ui:define name="centro">
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <p:outputLabel value="Suporte:" for="codUsuario"/>
+                        <p:selectOneMenu value="" id="codUsuario" style="width: 200px;">
+                        </p:selectOneMenu>
+
+                    </h:panelGrid>
+                    <p:panel header="Abertura de Atendimento">
+                        <h:panelGrid columns="2" cellspacing="5">
+                            <p:outputLabel value="Data Agendamento:" for="dataAgendamento" style="float: right"/>
+                            <p:calendar id="dataAgendamento" value="#{atendimentoMB.att.dataAgendamento}" title="DataAgendamento" effect="explode" pattern="dd/MM/yyyy HH:mm">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                            </p:calendar>
+                            <p:outputLabel value="Cliente:" for="codcliente" style="float: right"/>
+                            <p:inputText id="codcliente" value="#{atendimentoMB.att.codcliente}"  
+                                             required="true" requiredMessage="The Codcliente field is required." style="width: 500px;"/>
+
+                            <p:outputLabel value="Solicitante:" for="solicitante" style="float: right"/>
+                            <p:inputText id="solicitante" value="#{atendimentoMB.att.solicitante}" title="Solicitante" />
+                            <p:outputLabel value="Tipo Atendimento:" for="codtipoatendimento" style="float: right"/>
+                            <p:selectOneMenu id="codtipoatendimento" value="#{atendimentoMB.att.codtipoatendimento}"  
+                                             required="true" requiredMessage="The Codtipoatendimento field is required." style="width: 200px;">
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{fixme}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Origem:" for="codorigem" style="float: right"/>
+                            <p:selectOneMenu id="codorigem" value="#{atendimentoMB.att.codorigem}"  
+                                             required="true" requiredMessage="The Codorigem field is required." style="width: 200px;">
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{fixme}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Prioridade:" for="codprioridade" style="float: right"/>
+                            <p:selectOneMenu id="codprioridade" value="#{atendimentoMB.att.codprioridade}" 
+                                             required="true" requiredMessage="The Codprioridade field is required." style="width: 200px;">
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItems value="#{fixme}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Problema Informado:" for="problemaInformado" style="float: right"/>
+                            <p:inputTextarea id="problemaInformado" value="#{atendimentoMB.att.problemaInformado}" title="ProblemaInformado" required="true" requiredMessage="The ProblemaInformado field is required."/>
+                        </h:panelGrid>
+                    </p:panel>
+                    <h:panelGrid columns="2" style="float: right">
+                        <p:commandButton value="Cancelar"/>
+                        <p:commandButton value="Salvar"/>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
