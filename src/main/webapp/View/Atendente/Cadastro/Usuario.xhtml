@@ -21,8 +21,8 @@
                                          required="true" requiredMessage="CPF/CNPJ Inválido" style="text-align: center"/>
                             <p:outputLabel value="Sexo:" for="sexo" style="float: right" />
                             <p:selectOneRadio id="sexo" value="#{usuarioMB.usuario.sexo}" label="Sexo" required="true" requiredMessage="Sexo Inválido"> 
-                                <f:selectItem itemLabel="Masculino" itemValue="2" /> 
-                                <f:selectItem itemLabel="Feminino" itemValue="1" />  
+                                <f:selectItem itemLabel="Masculino" itemValue="M" /> 
+                                <f:selectItem itemLabel="Feminino" itemValue="F" />  
                             </p:selectOneRadio>  
                             <p:outputLabel value="Email:" for="email"  style="float: right"/>
                             <p:inputText id="email" value="#{usuarioMB.usuario.email}" title="Email" 
@@ -41,7 +41,7 @@
                             <p:fileUpload value="#{usuarioMB.usuario.foto}" mode="simple"/>  
                             <p:outputLabel value="Tipo de Usuario:" for="codtipousuario" style="float: right" />
                             <h:selectOneMenu id="codtipousuario" value="#{usuarioMB.usuario.codtipousuario.descricao}" required="true" requiredMessage="Tipo de Usuario Inválido" style="width: 150px;">
-                                <f:selectItems value="#{tipoUsuarioMB.listaDeTipoUsuarios}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo.codtipousuario}"/>
+                                <f:selectItems value="#{tipoUsuarioMB.listaDeTipoUsuarios()}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo.codtipousuario}"/>
                             </h:selectOneMenu>
                         </h:panelGrid>
                     </p:panel>

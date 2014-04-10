@@ -7,6 +7,7 @@ package Beans;
 
 import Model.Usuario;
 import Util.Manager;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.persistence.Query;
@@ -17,7 +18,7 @@ import javax.persistence.Query;
  */
 @ManagedBean
 @RequestScoped
-public class UsuarioMB extends Manager{
+public class UsuarioMB extends Manager {
 
     private Usuario usuario = new Usuario();
     private String contraSenha;
@@ -52,35 +53,42 @@ public class UsuarioMB extends Manager{
             return "usuario_" + query2.getSingleResult();
         }
     }
-//        public void Salvar() {
-//        try {
-//            usuarioEJB.Salvar(usuario);
-//            usuario = new Usuario();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//    }
-//    
-//    public void Excluir(Usuario usuario){
-//        try {
-//            usuarioEJB.Excluir(usuario);
-//            this.usuario = new Usuario();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//    }
-//////    public String listaDeUsuarioByUsuarioSenha(){
-//////        if(usuarioEJB.usuarioLogin()!=null){
-//////          return "/View/Suporte/index.jsf";
-//////        }else
-//////        if(usuarioEJB.usuarioLogin()==null){
-//////          return "/View/HomePage/Login.jsf";
-//////        }else
-//////        return null;
-////    }
-//    public List<Usuario> listaDeUsuarios(){
-//        return usuarioEJB.listaUsuario();
-//    }
+
+    public void Salvar() {
+        try {
+            em.getTransaction().begin();
+            em.persist(usuario);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void Altera(){
+        try {
+        em.getTransaction().begin();
+        em.merge(usuario);
+        em.getTransaction().commit();    
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+    }
+    public void Excluir() {
+        try {
+            em.getTransaction().begin();
+            em.remove(usuario);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public List<Usuario> listaDeUsuarios() {
+        em.getTransaction().begin();
+        Query query= em.createNamedQuery("Usuario.findAll");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
 //    public int qtdeAtendimentosAbertos(){
 //        return usuarioEJB.qtdeAbertos();
 //    }
