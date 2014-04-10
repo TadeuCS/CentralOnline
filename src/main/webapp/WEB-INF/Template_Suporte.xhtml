@@ -21,10 +21,9 @@
                 <p:layoutUnit position="north" size="190">
                     <p:graphicImage url="/resources/img/Logotipo.png" height="160" title="Logo" alt="logo" style="margin-left: 5%"/>
 
-                    <p:panel header="Bem Vindo" style="float: right;">
+                    <p:panel header="Bem Vindo Sr(a) #{request.remoteUser}" style="float: right;">
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1" style="text-align: center;float: right;">
-                                <p:commandLink value="Tadeu"/>
                                 <p:graphicImage url="/resources/img/usuario_M.png" width="80" height="80" alt="usuario_M"/>
                             </h:panelGrid>
                             <h:panelGrid>

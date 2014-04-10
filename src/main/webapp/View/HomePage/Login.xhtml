@@ -7,41 +7,43 @@
         <title>Login</title>
     </h:head>
     <h:body>
-<!--                        <h:form>
-                            
-                            <h:panelGrid style="margin: 15% 35%;text-align: center">
-                                <p:growl id="msg"/> 
-                                <p:panel header="LOGIN">
-                                    <h:panelGrid columns="2">
-                                        <p:outputLabel value="Usuario"/>
-                                        <p:inputText value="#{usuarioMB.usuario.usuario}" />
-                                        <p:outputLabel value="Senha"/>
-                                        <p:inputText value="#{usuarioMB.usuario.senha}" />
-                                        <p:button value="Sair"/>
-                                        <p:commandButton value="Entrar" action="/View/Suporte/index.jsf" ajax="false" style="float: right" update="msg" />
+<!--                                <h:form>
+                                    
+                                    <h:panelGrid style="margin: 15% 35%;text-align: center">
+                                        <p:growl id="msg"/> 
+                                        <p:panel header="LOGIN">
+                                            <h:panelGrid columns="2">
+                                                <p:outputLabel value="Usuario"/>
+                                                <p:inputText value="#{usuarioMB.usuario.usuario}" />
+                                                <p:outputLabel value="Senha"/>
+                                                <p:inputText value="#{usuarioMB.usuario.senha}" />
+                                                <p:button value="Sair"/>
+                                                <p:commandButton value="Entrar" action="/View/Suporte/index.jsf" ajax="false" style="float: right" update="msg" />
+                                            </h:panelGrid>
+                                        </p:panel>
                                     </h:panelGrid>
-                                </p:panel>
-                            </h:panelGrid>
-                        </h:form>-->
+                                </h:form>-->
 
-        <p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
-            <h:form></h:form>
+<p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
+
             <form method="post" action="#{request.contextPath}/j_spring_security_check">
-                    <h:panelGroup rendered="#{!empty param.login_error}">
-                        <span style="font-color:red"> Erro ao efetuar o login.</span><br />
-                        <br/>
-                        Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
-                    </h:panelGroup>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <p:outputLabel for="j_username" value="Usuario: " /> 
-                    <p:inputText id="j_username" required="true" autocomplete="false"/>
-                    <p:outputLabel for="j_password" value="Senha:  " />
-                    <p:password id="j_password" required="true" autocomplete="false"/>
-                    <h:commandButton value="Sair" style="text-align: center; height: 30px; width: 80px;"/>
-                    <h:commandButton value="Entrar" style="text-align: center; height: 30px; width: 80px;"/>
-                <script>
-                    document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
-                </script>
+                <h:panelGroup rendered="#{!empty param.login_error}">
+                    <span style="font-color:red"> Erro ao efetuar o login.</span><br />
+                    <br/>
+                    Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
+                </h:panelGroup>
+                <h:panelGrid columns="2" cellspacing="7" style="text-align: right">
+                    <a>Usuário:</a>
+                    <input type="text" name="j_username" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all ui-state-hover" /><p/>
+
+                    <a>Senha:</a>
+                    <input type="password" name="j_password" style="float: right" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all ui-state-hover"/><p/>
+                    <a href="/CentralOnline/View/HomePage/Principal.jsf" style="float: left;"><input type="button" value="Sair"/></a>
+                    <input type="submit" name="Entrar" />
+                    
+                    <script>
+                        document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
+                    </script>
                 </h:panelGrid>
             </form>
         </p:dialog>

@@ -67,16 +67,20 @@ public class AdministradorMB {
         }
     }
 
-    public String trocaTemplate(String tipoUsuario) {
-        if (tipoUsuario.contains("ADMINISTRADOR")) {
-            return "/WEB-INF/Template_Administrador.xhtml";
-        } else if (tipoUsuario.contains("ATENDENTE")) {
-            return "/WEB-INF/Template_Atendente.xhtml";
-        } else if (tipoUsuario.contains("SUPORTE")) {
+    public String trocaTemplates(){
+        FacesContext context= FacesContext.getCurrentInstance().getCurrentInstance();
+        ExternalContext external= context.getExternalContext();
+        HttpServletRequest request =(HttpServletRequest) external.getRequest();
+        if(request.isUserInRole("ROLE_SUPORTE")){
             return "/WEB-INF/Template_Suporte.xhtml";
-        } else {
+        }else
+        if(request.isUserInRole("ROLE_ATENDENTE")){
+            return "/WEB-INF/Template_Atendente.xhtml";
+        }else
+        if(request.isUserInRole("ROLE_ADMINISTRADOR")){
+            return "/WEB-INF/Template_Administrador.xhtml";
+        }else
             return null;
-        }
     }
 
     public UploadedFile getFile() {

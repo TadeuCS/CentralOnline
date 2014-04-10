@@ -8,8 +8,8 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="./css/default.css"/>
-        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <h:outputStylesheet name="/css/default.css"/>
+        <h:outputStylesheet name="/css/cssLayout.css"/>
         <link rel="shortcut icon" href="icon.ico" />
         <title>Central Online - Administrador</title>
     </h:head>
@@ -22,10 +22,9 @@
                 <p:layoutUnit position="north" size="190">
                     <p:graphicImage url="/resources/img/Logotipo.png" height="160" title="Logo" alt="logo" style="margin-left: 5%"/>
 
-                    <p:panel header="Bem Vindo" style="float: right;">
+                    <p:panel header="Bem Vindo Sr(a) #{request.remoteUser}" style="float: right;">
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1" style="text-align: center;float: right;">
-                                <p:commandLink value="Tadeu"/>
                                 <p:graphicImage url="/resources/img/usuario_M.png" width="80" height="80" alt="usuario_M"/>
                             </h:panelGrid>
                             <h:panelGrid>
@@ -66,40 +65,37 @@
                             <a href="/CentralOnline/View/Atendente/Cadastro/Usuario.jsf">Usuarios</a><p/>
                         </p:tab>
                         <p:tab title="Consulta">
-                            <p:commandLink value="Atendimentos"/><p/>
-                            <p:commandLink value="Clientes"/><p/>
-                            <p:commandLink value="Usuarios"/>
+                            <a href="/CentralOnline/View/Suporte/Consulta/Atendimentos.jsf">Atendimentos</a><p/>
+                            <a href="/CentralOnline/View/Suporte/Consulta/Clientes.jsf">Clientes</a><p/>
+                            <a href="/CentralOnline/View/Atendente/Consulta/Usuarios.jsf">Usuarios</a>
                         </p:tab>
 
                         <p:tab title="Atendimento">
-                            <p:commandLink value="Abertura"/><p/>
-                            <p:commandLink value="Cancelamento"/>
+                            <a href="/CentralOnline/View/Suporte/Atendimento/Abertura.jsf">Abertura</a><p/>
+                            <a href="/CentralOnline/View/Atendente/Atendimento/Cancelamento.jsf">Cancelamento</a>
                         </p:tab>
-                        
                         <p:tab title="Graficos">
-                            <p:commandLink value="Atendente"/><p/>
-                            <p:commandLink value="Atendimentos"/><p/>
-                            <p:commandLink value="Fluxo"/>
+                            <a href="/CentralOnline/View/Administrador/Grafico/Atendente.jsf">Atendentes</a><p/>
+                            <a href="/CentralOnline/View/Administrador/Grafico/Atendimentos.jsf">Atendimentos</a>
+                            <a href="/CentralOnline/View/Administrador/Grafico/Fluxo.jsf">Fluxo</a>
                         </p:tab>
-                        
                         <p:tab title="Relatórios">
-                            <p:commandLink value="Atendimentos Analíticos"/><p/>
-                            <p:commandLink value="Atendimentos Sintéticos"/><p/>
-                            <p:commandLink value="Clientes Cadastrados"/>
+                            <a href="/CentralOnline/View/Atendente/Relatorios/Atendimento_Analitico.jsf">Atendimentos Analíticos</a><p/>
+                            <a href="/CentralOnline/View/Atendente/Relatorios/Atendimento_Sintetico.jsf">Atendimentos Sintéticos</a><p/>
+                            <a href="/CentralOnline/View/Atendente/Relatorios/Clientes_Cadastrados.jsf">Clientes Cadastrados</a>
                         </p:tab>
 
                         <p:tab title="Ultilitários">
-                            <p:commandLink value="Disponibilidade Nfe"/><p/>
-                            <p:commandLink value="Consulta NFe Estadual"/><p/>
-                            <p:commandLink value="Consulta NFe Federal"/><p/>
-                            <p:commandLink value="WEB Danfe"/><p/>
-                            <p:commandLink value="ATS Informatica"/><p/>
-                            <p:commandLink value="Consulta CNPJ Estadual"/><p/>
-                            <p:commandLink value="Consulta CNPJ Federal"/><p/>
-                            <p:commandLink value="Contabilidade"/><p/>
-                            <p:commandLink value="NetSabe"/><p/>
-                            <p:commandLink value="Prefeitura"/><p/>
-                            <p:commandLink value="Santander"/>
+                            <a href="http://www.atsinformatica.com.br" target="_blank">ATS Informatica</a><p/>
+                            <a href="http://www.nfe.fazenda.gov.br/PORTAL/disponibilidade.aspx?versao=2.00" target="_blank">Disponibilidade NFe</a><p/>
+                            <a href="http://nfe.fazenda.mg.gov.br/consulta/Welcome.do;jsessionid=EDA4767C7749474B012F60C7C7D27FE5.nfenode211" target="_blank">Consulta NFe Estadual</a><p/>
+                            <a href="http://www.nfe.fazenda.gov.br/PORTAL/consulta.aspx?tipoConsulta=completa" target="_blank">Consulta NFe Federal</a><p/>
+                            <a href="http://trindadecontabilidade.com.br" target="_blank">Contabilidade</a><p/>
+                            <a href="http://www.netsabe.com.br" target="_blank">NetSabe</a><p/>
+                            <a href="http://www.patosdeminas.mg.gov.br/home" target="_blank">Prefeitura</a><p/>
+                            <a href="http://www.santander.com.br" target="_blank">Santander</a><p/>
+                            <a href="http://www.webdanfe.com.br/danfe/index.html" target="_blank">WEB Danfe</a>
+
                         </p:tab>
                     </p:accordionPanel>
                 </p:layoutUnit>
