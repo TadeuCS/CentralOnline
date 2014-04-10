@@ -42,7 +42,8 @@
                                 </h:panelGroup>
                                 <h:panelGroup >
                                     <p:button icon="ui-icon-pencil" outcome="/View/Suporte/Consulta/Usuario.jsf"/>
-                                    <p:button icon="ui-icon-power" outcome="/View/HomePage/Login.jsf" style="margin-left: 40%;margin-top: 10px; " />
+                                    <p:button icon="ui-icon-power" outcome="/View/HomePage/Login.jsf" href="#{request.contextPath}/j_spring_security_logout" 
+                                              style="margin-left: 40%;margin-top: 10px; " />
                                 </h:panelGroup>
                             </h:panelGrid>
                         </h:panelGrid>

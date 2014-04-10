@@ -10,8 +10,8 @@
 	 
     <http auto-config="true" access-denied-page="/View/HomePage/Login.jsf">
         <intercept-url pattern="/View/Administrador/**" access="ROLE_ADMINISTRADOR" /> 
-        <intercept-url pattern="/View/Atendente/**" access="ROLE_ATENDENTE" /> 
-        <intercept-url pattern="/View/Suporte/**" access="ROLE_SUPORTE" /> 
+        <intercept-url pattern="/View/Atendente/**" access="ROLE_ATENDENTE,ROLE_ADMINISTRADOR" /> 
+        <intercept-url pattern="/View/Suporte/**" access="ROLE_SUPORTE,ROLE_ATENDENTE,ROLE_ADMINISTRADOR" /> 
         <form-login login-page="/View/HomePage/Login.jsf" always-use-default-target="true"
                               default-target-url="/index.jsf" authentication-failure-url="/View/HomePage/Login.jsf?login_error=1" /> 
         <logout logout-success-url="/View/HomePage/Login.jsf" />
