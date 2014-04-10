@@ -13,7 +13,9 @@ import java.io.InputStream;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -29,7 +31,22 @@ public class AdministradorMB {
 
     public AdministradorMB() {
     }
-
+    public String trocaLink(){
+        FacesContext context= FacesContext.getCurrentInstance().getCurrentInstance();
+        ExternalContext external= context.getExternalContext();
+        HttpServletRequest request =(HttpServletRequest) external.getRequest();
+        if(request.isUserInRole("ROLE_SUPORTE")){
+            return "View/Suporte/index.jsf";
+        }else
+        if(request.isUserInRole("ROLE_ATENDENTE")){
+            return "View/Atendente/index.jsf";
+        }else
+        if(request.isUserInRole("ROLE_ADMINISTRADOR")){
+            return "View/Administrador/index.jsf";
+        }else
+            return null;
+    }
+    
     public void uparArquivo(FileUploadEvent event) throws IOException {
         try {
             UploadedFile arq = event.getFile();
@@ -50,24 +67,12 @@ public class AdministradorMB {
         }
     }
 
-    public String direcionaIndex(int tipoUsuario) {
-        if (tipoUsuario == 3) {
-            return "/View/Administrador/index.jsf";
-        } else if (tipoUsuario == 2) {
-            return "/View/Atendente/index.jsf";
-        } else if (tipoUsuario == 1) {
-            return "/View/Suporte/index.jsf";
-        } else {
-            return null;
-        }
-    }
-
-    public String trocaTemplate(int tipoUsuario) {
-        if (tipoUsuario == 3) {
+    public String trocaTemplate(String tipoUsuario) {
+        if (tipoUsuario.contains("ADMINISTRADOR")) {
             return "/WEB-INF/Template_Administrador.xhtml";
-        } else if (tipoUsuario == 2) {
+        } else if (tipoUsuario.contains("ATENDENTE")) {
             return "/WEB-INF/Template_Atendente.xhtml";
-        } else if (tipoUsuario == 1) {
+        } else if (tipoUsuario.contains("SUPORTE")) {
             return "/WEB-INF/Template_Suporte.xhtml";
         } else {
             return null;
