@@ -25,7 +25,7 @@
                     <p:panel header="Bem Vindo Sr(a) #{request.remoteUser}" style="float: right;">
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1" style="text-align: center;float: right;">
-                                <p:graphicImage url="/resources/img/usuario_M.png" width="80" height="80" alt="usuario_M"/>
+                                <p:graphicImage url="/resources/img/#{usuarioMB.alteraImagem(request.remoteUser)}.png" width="80" height="80"/>
                             </h:panelGrid>
                             <h:panelGrid>
                                 <h:panelGroup>
@@ -51,7 +51,7 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="west" size="250" style="text-align: center;">
-                    <p:accordionPanel>
+                    <p:accordionPanel >
                         <p:tab title="Home">
                             <a href="/CentralOnline/View/Administrador/index.jsf">Início</a>
                         </p:tab>

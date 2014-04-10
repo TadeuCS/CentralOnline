@@ -6,9 +6,10 @@
 package Beans;
 
 import Model.Usuario;
-import java.util.List;
+import Util.Manager;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,11 +17,11 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class UsuarioMB {
+public class UsuarioMB extends Manager{
 
     private Usuario usuario = new Usuario();
     private String contraSenha;
-  
+
     public UsuarioMB() {
     }
 
@@ -31,8 +32,8 @@ public class UsuarioMB {
     public void setContraSenha(String contraSenha) {
         this.contraSenha = contraSenha;
     }
-    
-      public Usuario getUsuario() {
+
+    public Usuario getUsuario() {
         return usuario;
     }
 
@@ -40,6 +41,17 @@ public class UsuarioMB {
         this.usuario = usuario;
     }
 
+    public String alteraImagem(String usuarioLogado) {
+        em.getTransaction().begin();
+        Query query1 = em.createQuery("SELECT u.foto from Usuario u where u.usuario =:user").setParameter("user", usuarioLogado);
+        Query query2 = em.createQuery("SELECT u.sexo from Usuario u where u.usuario =:user").setParameter("user", usuarioLogado);
+        em.getTransaction().commit();
+        if (query1.getSingleResult().toString().compareTo(usuarioLogado + ".png") == 0) {
+            return usuarioLogado;
+        } else {
+            return "usuario_" + query2.getSingleResult();
+        }
+    }
 //        public void Salvar() {
 //        try {
 //            usuarioEJB.Salvar(usuario);

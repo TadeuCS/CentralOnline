@@ -16,6 +16,6 @@ import javax.persistence.Persistence;
  * @author Tadeu
  */
 public class Manager {
-    protected EntityManagerFactory emf=Persistence.createEntityManagerFactory("CentralOnlinePU");
-    protected EntityManager em=emf.createEntityManager();
+    public EntityManagerFactory emf=Persistence.createEntityManagerFactory("CentralOnlinePU");
+    public EntityManager em=emf.createEntityManager();
 }
