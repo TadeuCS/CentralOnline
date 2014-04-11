@@ -11,6 +11,7 @@
         <ui:composition template="#{administradorMB.trocaTemplates()}">
             <ui:define name="centro">
                 <h:form>
+                    <p:growl id="messages"/>
                     <p:panel header="Cadastro de Usuários" footer="" >
                         <h:panelGrid columns="2" style="width: 100%;" >
                             <p:outputLabel value="Nome:" for="nome" style="float: right"/>
@@ -38,7 +39,7 @@
                                         feedback="true" promptLabel="Informe uma Senha" weakLabel="Fraco"  
                                         goodLabel="Bom" strongLabel="Forte"/>
                             <p:outputLabel value="Foto:" style="float: right" />
-                            <p:fileUpload value="#{usuarioMB.usuario.foto}" mode="simple"/>  
+                            <p:fileUpload value="#{usuarioMB.usuario.foto}" mode="simple" sizeLimit="40000" allowTypes="/(\.|\/)(png)$/" update="messages"/>  
                             <p:outputLabel value="Tipo de Usuario:" for="codtipousuario" style="float: right" />
                             <h:selectOneMenu id="codtipousuario" value="#{usuarioMB.usuario.codtipousuario.descricao}" required="true" requiredMessage="Tipo de Usuario Inválido" style="width: 150px;">
                                 <f:selectItems value="#{tipoUsuarioMB.listaDeTipoUsuarios()}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo.codtipousuario}"/>
