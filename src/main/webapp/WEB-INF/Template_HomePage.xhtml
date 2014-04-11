@@ -24,12 +24,14 @@
 
                 <p:layoutUnit position="center" id="center">
                     <p:menubar style="text-align: center">
-                        <p:submenu label="Cadastro" >
-                            <p:menuitem value="Clientes"/>
-                        </p:submenu>
                         <p:menuitem value="Colaboradores"/>
+                        <p:submenu label="Produtos" >
+                            <p:menuitem value="Yunes"/>
+                            <p:menuitem value="ATS"/>
+                            <p:menuitem value="Pro Soft"/>
+                        </p:submenu>
                         <p:menuitem value="Contato"/>
-                        <p:menuitem value="Central Online"/>
+                        <p:menuitem value="Central Online" url="/View/HomePage/Login.jsf"/>
                     </p:menubar>
                     <ui:insert name="centro">
                     </ui:insert>
