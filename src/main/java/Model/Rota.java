@@ -48,7 +48,7 @@ public class Rota implements Serializable {
     @Column(name = "DIRETORIO")
     private String diretorio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codrota")
-    private List<Cliente> clientesList;
+    private List<Cliente> clienteList;
 
     public Rota() {
     }
@@ -79,12 +79,12 @@ public class Rota implements Serializable {
     }
 
     @XmlTransient
-    public List<Cliente> getClientesList() {
-        return clientesList;
+    public List<Cliente> getClienteList() {
+        return clienteList;
     }
 
-    public void setClientesList(List<Cliente> clientesList) {
-        this.clientesList = clientesList;
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
     }
 
     @Override

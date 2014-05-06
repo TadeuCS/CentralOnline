@@ -6,9 +6,11 @@
 package Beans;
 
 import Model.Prioridade;
+import Util.Manager;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,7 +18,7 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class PrioridadeMB {
+public class PrioridadeMB extends Manager{
 
     Prioridade prioridade = new Prioridade();
 
@@ -31,10 +33,15 @@ public class PrioridadeMB {
     public PrioridadeMB() {
     }
 
-//    public void salva(){
-//        prioridadeEJB.Salvar(prioridade);
-//    }
-//    public List<Prioridade> listaPrioridades() {
-//        return prioridadeEJB.listaPrioridade();
-//    }
+    public void salva(){
+        em.getTransaction().begin();
+        em.merge(prioridade);
+        em.getTransaction().commit();
+    }
+    public List<Prioridade> listaPrioridades() {
+        em.getTransaction().begin();
+        Query query= em.createNamedQuery("Prioridade.findAll");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
 }

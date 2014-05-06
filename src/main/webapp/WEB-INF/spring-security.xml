@@ -20,15 +20,15 @@
     <beans:import resource="datasource.xml"/>
 	    
     <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">  
-        <beans:property name="basename" value="classpath:org/springframework/security/messages"/>  
+        <beans:property name="basename" value="cdlasspath:org/springframework/security/messages"/>  
     </beans:bean>  
 	
     <authentication-manager>
         <authentication-provider>
-<!--            <password-encoder hash="md5" />-->
+            <password-encoder hash="md5" />
             <jdbc-user-service data-source-ref="dataSource"
-                                           users-by-username-query="SELECT usuario,senha,1 as ativo from usuario WHERE usuario = ?"
-                                           authorities-by-username-query="SELECT usuario,descricao from usuario as a inner join tipo_usuario as b on a.codtipousuario = b.codtipousuario WHERE usuario = ?" />
+                                           users-by-username-query="SELECT usuario,senha,bloqueado ativo from USUARIO WHERE usuario = ?"
+                                           authorities-by-username-query="SELECT usuario,CONCAT('ROLE_',descricao) from USUARIO as a inner join TIPO_USUARIO as b on a.codtipousuario = b.codtipousuario WHERE a.usuario = ?" />
         </authentication-provider>
     </authentication-manager>
 

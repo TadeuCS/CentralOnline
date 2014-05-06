@@ -6,9 +6,11 @@
 package Beans;
 
 import Model.Email;
+import Util.Manager;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,7 +18,7 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class EmailMB {
+public class EmailMB extends Manager {
 
     Email email = new Email();
 
@@ -31,7 +33,10 @@ public class EmailMB {
     public EmailMB() {
     }
 
-//    public List<Email> listaEmails() {
-//        return emailEJB.listaEmail();
-//    }
+    public List<Email> listaEmails() {
+        em.getTransaction().begin();
+        Query query = em.createNamedQuery("Email.findAll");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
 }

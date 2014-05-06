@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="#{administradorMB.trocaTemplates()}"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="centro">
+        <h:form>
+            <p:growl id="msg" life="3000"/>
+            <p:panel header="Alteração de Imagem">
+                <p:panel>
+                    <p:fileUpload fileUploadListener="#{administradorMB.uparArquivo}"  
+                                  mode="advanced"
+                                  label="Buscar"
+                                  update="messages"
+                                  auto="true"  
+                                  sizeLimit="100000000"  
+                                  allowTypes="/(\.|\/)(gif|jpg|png)$/"/>  
+                    <p:growl id="messages" showDetail="true"/>
+                    <p:panel id="pnl_imagem" header="Foto">
+                        <p:graphicImage url="/resources/img/teste.png" height="200" width="350" title="Logo" alt="logo" style="margin-left: 5%"/>
+                    </p:panel>
+                </p:panel>
+
+                <h:panelGrid columns="2">
+                    <p:button value="Cancelar" outcome="/View/Atendente/index.jsf"/>
+                    <p:commandButton value="Salvar" update="msg" />
+                </h:panelGrid>
+            </p:panel>                
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

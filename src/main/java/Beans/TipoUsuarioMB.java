@@ -5,9 +5,14 @@
  */
 package Beans;
 
+import Controller.TipoUsuarioDAO;
 import Model.TipoUsuario;
+import Util.Manager;
+import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -15,15 +20,20 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class TipoUsuarioMB {
+public class TipoUsuarioMB extends Manager {
 
-    private TipoUsuario tipoUsuario = new TipoUsuario();
+    private TipoUsuario tipoUsuario;
+    TipoUsuarioDAO tipoUsuarioDAO = new TipoUsuarioDAO();
 
-  
     public TipoUsuarioMB() {
+        novo();
     }
-    
-      public TipoUsuario getTipoUsuario() {
+
+    public void novo() {
+        tipoUsuario = new TipoUsuario();
+    }
+
+    public TipoUsuario getTipoUsuario() {
         return tipoUsuario;
     }
 
@@ -31,25 +41,17 @@ public class TipoUsuarioMB {
         this.tipoUsuario = tipoTipoUsuario;
     }
 
-//        public void Salvar() {
-//        try {
-//            tipoUsuarioEJB.Salvar(tipoUsuario);
-//            tipoUsuario = new TipoUsuario();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//    }
-//    
-//    public void Excluir(TipoUsuario tipoTipoUsuario){
-//        try {
-//            tipoUsuarioEJB.Excluir(tipoTipoUsuario);
-//            this.tipoUsuario = new TipoUsuario();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//    }
-//    
-//    public List<TipoUsuario> listaDeTipoUsuarios(){
-//        return tipoUsuarioEJB.listaTipoUsuario();
-//    }
+    public List<TipoUsuario> listaTipoUsuarios() {
+        return tipoUsuarioDAO.lista();
+    }
+
+    public void salvar() {
+        try {
+            tipoUsuarioDAO.Salvar(tipoUsuario);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Salvo com Sucesso", ""));
+            novo();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
+        }
+    }
 }

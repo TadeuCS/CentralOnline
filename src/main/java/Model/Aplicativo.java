@@ -48,9 +48,9 @@ public class Aplicativo implements Serializable {
     @Column(name = "DESCRICAO")
     private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codaplicativo")
-    private List<Link> linksList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aplicativo")
-    private List<AplicativoClientes> aplicativoClientesList;
+    private List<Link> linkList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codaplicativo")
+    private List<AplicativoCliente> aplicativoClienteList;
 
     public Aplicativo() {
     }
@@ -81,21 +81,21 @@ public class Aplicativo implements Serializable {
     }
 
     @XmlTransient
-    public List<Link> getLinksList() {
-        return linksList;
+    public List<Link> getLinkList() {
+        return linkList;
     }
 
-    public void setLinksList(List<Link> linksList) {
-        this.linksList = linksList;
+    public void setLinkList(List<Link> linkList) {
+        this.linkList = linkList;
     }
 
     @XmlTransient
-    public List<AplicativoClientes> getAplicativoClientesList() {
-        return aplicativoClientesList;
+    public List<AplicativoCliente> getAplicativoClienteList() {
+        return aplicativoClienteList;
     }
 
-    public void setAplicativoClientesList(List<AplicativoClientes> aplicativoClientesList) {
-        this.aplicativoClientesList = aplicativoClientesList;
+    public void setAplicativoClienteList(List<AplicativoCliente> aplicativoClienteList) {
+        this.aplicativoClienteList = aplicativoClienteList;
     }
 
     @Override

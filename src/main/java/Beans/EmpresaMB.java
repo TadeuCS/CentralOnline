@@ -6,9 +6,11 @@
 package Beans;
 
 import Model.Empresa;
+import Util.Manager;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,7 +18,7 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class EmpresaMB {
+public class EmpresaMB extends Manager {
 
     Empresa empresa = new Empresa();
 
@@ -30,8 +32,11 @@ public class EmpresaMB {
 
     public EmpresaMB() {
     }
-//
-//    public List<Empresa> listaEmpresas() {
-//        return empresaEJB.listaEmpresa();
-//    }
+
+    public List<Empresa> listaEmpresas() {
+        em.getTransaction().begin();
+        Query query=em.createNamedQuery("Empresa.findAll");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
 }

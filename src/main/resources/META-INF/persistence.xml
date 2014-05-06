@@ -2,6 +2,30 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="CentralOnlinePU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>Model.Aplicativo</class>
+    <class>Model.AplicativoCliente</class>
+    <class>Model.Atendimento</class>
+    <class>Model.Avaliacao</class>
+    <class>Model.Cliente</class>
+    <class>Model.Email</class>
+    <class>Model.Empresa</class>
+    <class>Model.Endereco</class>
+    <class>Model.Link</class>
+    <class>Model.Log</class>
+    <class>Model.Origem</class>
+    <class>Model.Ponto</class>
+    <class>Model.Prioridade</class>
+    <class>Model.Rota</class>
+    <class>Model.Status</class>
+    <class>Model.Telefone</class>
+    <class>Model.TipoAtendimento</class>
+    <class>Model.TipoUsuario</class>
+    <class>Model.Uf</class>
+    <class>Model.Informacao</class>
+    <class>Model.TipoMovimento</class>
+    <class>Model.TipoInformacao</class>
+    <class>Model.Tipomovimento</class>
+    <class>Model.Usuario</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/centralonline?zeroDateTimeBehavior=convertToNull"/>

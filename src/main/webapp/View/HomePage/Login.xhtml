@@ -7,30 +7,14 @@
         <title>Login</title>
     </h:head>
     <h:body>
-<!--                                <h:form>
-                                    
-                                    <h:panelGrid style="margin: 15% 35%;text-align: center">
-                                        <p:growl id="msg"/> 
-                                        <p:panel header="LOGIN">
-                                            <h:panelGrid columns="2">
-                                                <p:outputLabel value="Usuario"/>
-                                                <p:inputText value="#{usuarioMB.usuario.usuario}" />
-                                                <p:outputLabel value="Senha"/>
-                                                <p:inputText value="#{usuarioMB.usuario.senha}" />
-                                                <p:button value="Sair"/>
-                                                <p:commandButton value="Entrar" action="/View/Suporte/index.jsf" ajax="false" style="float: right" update="msg" />
-                                            </h:panelGrid>
-                                        </p:panel>
-                                    </h:panelGrid>
-                                </h:form>-->
 
-<p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
+        <p:dialog header="Login" visible="true" closable="false" draggable="false" resizable="false" width="420">
 
             <form method="post" action="#{request.contextPath}/j_spring_security_check">
                 <h:panelGroup rendered="#{!empty param.login_error}">
-                    <span style="font-color:red"> Erro ao efetuar o login.</span><br />
-                    <br/>
-                    Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
+                    <span style="color:red"> Erro ao efetuar o login.</span><br />
+                    <p style="text-align: center;font-size: 14px;">Usuário ou Senha Inválidos</p>
+                    <!--  Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}-->
                 </h:panelGroup>
                 <h:panelGrid columns="2" cellspacing="7" style="text-align: right">
                     <a>Usuário:</a>
@@ -38,9 +22,9 @@
 
                     <a>Senha:</a>
                     <input type="password" name="j_password" style="float: right" class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all ui-state-hover"/><p/>
-                    <a href="/CentralOnline/View/HomePage/Principal.jsf" style="float: left;"><input type="button" value="Sair"/></a>
-                    <input type="submit" name="Entrar" />
-                    
+                    <a href="/CentralOnline/View/HomePage/Principal.jsf" style="right: 25%;position: relative"><input type="button" value="Sair" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="font-size: 20px"/></a>
+                    <input type="submit" name="Entrar" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="font-size: 20px"/>
+
                     <script>
                         document.getElementById("login").j_username.value = "#{SPRING_SECURITY_LAST_USERNAME}";
                     </script>

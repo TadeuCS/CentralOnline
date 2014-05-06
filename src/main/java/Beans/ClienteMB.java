@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Beans;
 
-import Model.AplicativoClientes;
+import Controller.ClienteDAO;
+import Model.AplicativoCliente;
 import Model.Cliente;
 import Model.Rota;
 import Model.Telefone;
+import Util.Manager;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -20,27 +21,17 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class ClienteMB {
-    
-    Rota rota= new Rota();
-    Telefone telefone = new Telefone();
-    AplicativoClientes aplicativoClientes= new AplicativoClientes();
-    Cliente cliente = new Cliente();
+public class ClienteMB extends Manager {
+
+    private Cliente cliente;
+    ClienteDAO clienteDAO = new ClienteDAO();
     private String mapa;
-    
-    public void retornaMapa(){
-        this.mapa= mapa.replaceAll("<iframe src=\"", "");
+
+    public void retornaMapa() {
+        this.mapa = mapa.replaceAll("<iframe src=\"", "");
         this.mapa = mapa.replaceAll("\" width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\"></iframe>", "");
     }
 
-    public Telefone getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(Telefone telefone) {
-        this.telefone = telefone;
-    }
-    
     public String getMapa() {
         return mapa;
     }
@@ -49,22 +40,6 @@ public class ClienteMB {
         this.mapa = mapa;
     }
 
-    public Rota getRota() {
-        return rota;
-    }
-
-    public void setRota(Rota rota) {
-        this.rota = rota;
-    }
-    
-    public AplicativoClientes getAplicativoClientes() {
-        return aplicativoClientes;
-    }
-
-    public void setAplicativoClientes(AplicativoClientes aplicativoClientes) {
-        this.aplicativoClientes = aplicativoClientes;
-    }
-    
     public Cliente getCliente() {
         return cliente;
     }
@@ -72,20 +47,20 @@ public class ClienteMB {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
     
     public ClienteMB() {
+        novo();
     }
-//    public List<AplicativoClientes> listaDeLinks(){
-//        return clienteEJB.listaLinks();
-//    }
-//    public List<Telefone> listaDeTelefone(){
-//        return clienteEJB.listaTelefones();
-//    }
-//    public List<Cliente> listaDeClientes(){
-//        return clienteEJB.listaClientes();
-//    }
-//    public List<Cliente> listaDeClientesByNomeFantasia(){
-//        return clienteEJB.listaClientesByNomeFantasia();
-//    }
-    
+
+    public void novo(){
+        cliente= new Cliente();
+    }
+    public List<Cliente> listaClientes() {
+        return clienteDAO.listaDeClientes();
+    }
+
+    public List<Cliente> listaClientesByNomeFantasia() {
+        return clienteDAO.listaDeClientesByNomeFantasia(cliente.getNomeFantasia());
+    }
 }

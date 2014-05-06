@@ -5,11 +5,17 @@
  */
 package Beans;
 
+import Controller.TipoUsuarioDAO;
+import Controller.UsuarioDAO;
+import Model.TipoUsuario;
 import Model.Usuario;
+import Util.Criptografia;
 import Util.Manager;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.Query;
 
 /**
@@ -20,10 +26,28 @@ import javax.persistence.Query;
 @RequestScoped
 public class UsuarioMB extends Manager {
 
-    private Usuario usuario = new Usuario();
+    private Usuario usuario;
     private String contraSenha;
+    private String antigaSenha;
+    private TipoUsuario tipoUsuario;
+    private boolean bloqueado;
+    static String usuarioLogado;
 
     public UsuarioMB() {
+        novo();
+    }
+
+    public void novo() {
+        usuario = new Usuario();
+        tipoUsuario = new TipoUsuario();
+    }
+
+    public String getAntigaSenha() {
+        return antigaSenha;
+    }
+
+    public void setAntigaSenha(String antigaSenha) {
+        this.antigaSenha = antigaSenha;
     }
 
     public String getContraSenha() {
@@ -32,6 +56,22 @@ public class UsuarioMB extends Manager {
 
     public void setContraSenha(String contraSenha) {
         this.contraSenha = contraSenha;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public boolean isBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
     }
 
     public Usuario getUsuario() {
@@ -44,58 +84,154 @@ public class UsuarioMB extends Manager {
 
     public String alteraImagem(String usuarioLogado) {
         em.getTransaction().begin();
-        Query query1 = em.createQuery("SELECT u.foto from Usuario u where u.usuario =:user").setParameter("user", usuarioLogado);
-        Query query2 = em.createQuery("SELECT u.sexo from Usuario u where u.usuario =:user").setParameter("user", usuarioLogado);
+        Query query1 = em.createNativeQuery("SELECT u.foto from USUARIO u where u.usuario like '" + usuarioLogado + "'");
+        Query query2 = em.createNativeQuery("SELECT u.sexo from USUARIO u where u.usuario like '" + usuarioLogado + "'");
         em.getTransaction().commit();
-        if (query1.getSingleResult().toString().compareTo(usuarioLogado + ".png") == 0) {
-            return usuarioLogado;
+        if (query1.getSingleResult().toString().compareToIgnoreCase(usuarioLogado + ".png") == 0) {
+            return usuarioLogado + ".png";
         } else {
-            return "usuario_" + query2.getSingleResult();
+            return "usuario_" + query2.getSingleResult().toString() + ".png";
         }
     }
 
-    public void Salvar() {
-        try {
-            em.getTransaction().begin();
-            em.persist(usuario);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    public void Altera(){
-        try {
-        em.getTransaction().begin();
-        em.merge(usuario);
-        em.getTransaction().commit();    
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        
-    }
-    public void Excluir() {
-        try {
-            em.getTransaction().begin();
-            em.remove(usuario);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e);
+    public String validaSenha() {
+        if (usuario.getSenha().equals(contraSenha)) {
+            Criptografia criptografia = new Criptografia();
+            usuario.setSenha(criptografia.criptografar(usuario.getSenha()));
+            return usuario.getSenha();
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Senhas Diferentes", ""));
+            return null;
         }
     }
 
-    public List<Usuario> listaDeUsuarios() {
+    public void validaBloqueado() {
+        if (bloqueado == false) {
+            usuario.setBloqueado('1');
+        } else {
+            usuario.setBloqueado('0');
+        }
+    }
+    
+    public void validaNovaSenha(String usuarioLogado) {
+        this.usuarioLogado=usuarioLogado;
+        String novaSenha=null;
+        novaSenha=usuario.getSenha();
+        antigaSenha = Criptografia.criptografar(antigaSenha);
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        if (usuarioDAO.consulta(usuarioLogado, antigaSenha) != null) {
+            this.usuario = usuarioDAO.consulta(usuarioLogado, antigaSenha);
+            this.usuario.setSenha(novaSenha);
+            salva();
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário ou Senha Inválidos", ""));
+        }
+    }
+
+    public void salva() {
+        if (validaSenha() != null) {
+            if (usuario.getCodusuario() == null) {
+                try {
+                    validaBloqueado();
+                    usuario.setCodtipousuario(tipoUsuario);
+                    usuario.setFoto("foto");
+                    UsuarioDAO usuarioDAO = new UsuarioDAO();
+                    usuarioDAO.salva(usuario);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Salvo com Sucesso!", ""));
+                    novo();
+                } catch (Exception e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Salvar Usuario\n" + e, ""));
+                }
+            } else {
+                try {
+                    UsuarioDAO usuarioDAO = new UsuarioDAO();
+                    TipoUsuarioDAO tipoUsuarioDAO= new TipoUsuarioDAO();
+                    tipoUsuario= tipoUsuarioDAO.consulta(usuario.getCodtipousuario());
+                    usuario.setCodtipousuario(tipoUsuario);
+                    usuarioDAO.salva(usuario);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Editado com Sucesso!", ""));
+                    novo();
+                } catch (Exception e) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao Editar Usuario!\n" + e, ""));
+                }
+            }
+        }
+    }
+
+    public void remover() {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        try {
+            usuarioDAO.exclui(usuario);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Removido com Sucesso!", ""));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao remover Usuario!\n" + e, ""));
+        }
+    }
+
+    public List<Usuario> listaSuportes() {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.lista();
+    }
+
+    public String qtdeAtendimentosAbertos(String usuarioLogado) {
         em.getTransaction().begin();
-        Query query= em.createNamedQuery("Usuario.findAll");
+        Query query = em.createNativeQuery("SELECT COUNT(*) from ATENDIMENTO A "
+                + "INNER JOIN USUARIO U ON A.CODUSUARIO=U.CODUSUARIO "
+                + "INNER JOIN STATUS S ON A.CODSTATUS=S.CODSTATUS "
+                + "WHERE U.USUARIO LIKE '" + usuarioLogado + "' AND S.DESCRICAO LIKE 'EXECUCAO' AND U.BLOQUEADO = 1");
         em.getTransaction().commit();
-        return query.getResultList();
+
+        return query.getSingleResult().toString();
     }
-//    public int qtdeAtendimentosAbertos(){
-//        return usuarioEJB.qtdeAbertos();
-//    }
-//    public int qtdeAtendimentosConcluidos(){
-//        return usuarioEJB.qtdeConcluidos();
-//    }
-//    public int qtdeAtendimentosPendentes(){
-//        return usuarioEJB.qtdePendentes();
-//    }
+
+    public String qtdeAtendimentosConcluidos(String usuarioLogado) {
+        em.getTransaction().begin();
+        Query query = em.createNativeQuery("SELECT COUNT(*) from ATENDIMENTO A "
+                + "INNER JOIN USUARIO U ON A.CODUSUARIO=U.CODUSUARIO "
+                + "INNER JOIN STATUS S ON A.CODSTATUS=S.CODSTATUS "
+                + "WHERE U.USUARIO LIKE '" + usuarioLogado + "' AND S.DESCRICAO LIKE 'CONCLUIDO' AND U.BLOQUEADO = 1");
+        em.getTransaction().commit();
+        return query.getSingleResult().toString();
+    }
+
+    public String qtdeAtendimentosPendentes(String usuarioLogado) {
+        em.getTransaction().begin();
+        Query query = em.createNativeQuery("SELECT COUNT(*) from ATENDIMENTO A "
+                + "INNER JOIN USUARIO U ON A.CODUSUARIO=U.CODUSUARIO "
+                + "INNER JOIN STATUS S ON A.CODSTATUS=S.CODSTATUS "
+                + "WHERE U.USUARIO LIKE '" + usuarioLogado + "' AND S.DESCRICAO LIKE 'PENDENTE' AND U.BLOQUEADO = 1");
+        em.getTransaction().commit();
+        return query.getSingleResult().toString();
+    }
+
+    public String qtdeAllAtendimentosAbertos() {
+        em.getTransaction().begin();
+        Query query = em.createNativeQuery("SELECT COUNT(*) from ATENDIMENTO A "
+                + "INNER JOIN STATUS S ON A.CODSTATUS=S.CODSTATUS "
+                + "INNER JOIN USUARIO U ON A.CODUSUARIO=U.CODUSUARIO "
+                + "WHERE S.DESCRICAO LIKE 'EXECUCAO' AND U.CODTIPOUSUARIO=1 AND U.BLOQUEADO = 1" );
+        em.getTransaction().commit();
+        return query.getSingleResult().toString();
+    }
+
+    public String qtdeAllAtendimentosConcluidos() {
+        em.getTransaction().begin();
+        Query query = em.createNativeQuery("SELECT COUNT(*) from ATENDIMENTO A "
+                + "INNER JOIN STATUS S ON A.CODSTATUS=S.CODSTATUS "
+                + "INNER JOIN USUARIO U ON A.CODUSUARIO=U.CODUSUARIO "
+                + "WHERE S.DESCRICAO LIKE 'CONCLUIDO' AND U.CODTIPOUSUARIO=1 AND U.BLOQUEADO = 1" );
+        em.getTransaction().commit();
+        return query.getSingleResult().toString();
+    }
+
+    public String qtdeAllAtendimentosPendentes() {
+        em.getTransaction().begin();
+        Query query = em.createNativeQuery("SELECT COUNT(*) from ATENDIMENTO A "
+                + "INNER JOIN STATUS S ON A.CODSTATUS=S.CODSTATUS "
+                + "INNER JOIN USUARIO U ON A.CODUSUARIO=U.CODUSUARIO "
+                + "WHERE S.DESCRICAO LIKE 'PENDENTE' AND U.CODTIPOUSUARIO=1 AND U.BLOQUEADO = 1");
+        em.getTransaction().commit();
+        return query.getSingleResult().toString();
+    }
+
 }

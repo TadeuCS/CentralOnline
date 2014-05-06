@@ -99,24 +99,27 @@ public class Atendimento implements Serializable {
     @Column(name = "DATA_SOLUCAO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataSolucao;
-    @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
-    @ManyToOne(optional = false)
-    private Cliente codcliente;
     @JoinColumn(name = "CODSTATUS", referencedColumnName = "CODSTATUS")
     @ManyToOne(optional = false)
     private Status codstatus;
+    @JoinColumn(name = "CODTIPOATENDIMENTO", referencedColumnName = "CODTIPOATENDIMENTO")
+    @ManyToOne(optional = false)
+    private TipoAtendimento codtipoatendimento;
     @JoinColumn(name = "CODPRIORIDADE", referencedColumnName = "CODPRIORIDADE")
     @ManyToOne(optional = false)
     private Prioridade codprioridade;
+    @JoinColumn(name = "CODCLIENTE", referencedColumnName = "CODCLIENTE")
+    @ManyToOne(optional = false)
+    private Cliente codcliente;
     @JoinColumn(name = "CODUSUARIO", referencedColumnName = "CODUSUARIO")
     @ManyToOne(optional = false)
     private Usuario codusuario;
     @JoinColumn(name = "CODORIGEM", referencedColumnName = "CODORIGEM")
     @ManyToOne(optional = false)
     private Origem codorigem;
-    @JoinColumn(name = "CODTIPOATENDIMENTO", referencedColumnName = "CODTIPOATENDIMENTO")
+    @JoinColumn(name = "CODAVALIACAO", referencedColumnName = "CODAVALIACAO")
     @ManyToOne(optional = false)
-    private TipoAtendimento codtipoatendimento;
+    private Avaliacao codavaliacao;
 
     public Atendimento() {
     }
@@ -244,14 +247,6 @@ public class Atendimento implements Serializable {
         this.dataSolucao = dataSolucao;
     }
 
-    public Cliente getCodcliente() {
-        return codcliente;
-    }
-
-    public void setCodcliente(Cliente codcliente) {
-        this.codcliente = codcliente;
-    }
-
     public Status getCodstatus() {
         return codstatus;
     }
@@ -260,12 +255,28 @@ public class Atendimento implements Serializable {
         this.codstatus = codstatus;
     }
 
+    public TipoAtendimento getCodtipoatendimento() {
+        return codtipoatendimento;
+    }
+
+    public void setCodtipoatendimento(TipoAtendimento codtipoatendimento) {
+        this.codtipoatendimento = codtipoatendimento;
+    }
+
     public Prioridade getCodprioridade() {
         return codprioridade;
     }
 
     public void setCodprioridade(Prioridade codprioridade) {
         this.codprioridade = codprioridade;
+    }
+
+    public Cliente getCodcliente() {
+        return codcliente;
+    }
+
+    public void setCodcliente(Cliente codcliente) {
+        this.codcliente = codcliente;
     }
 
     public Usuario getCodusuario() {
@@ -284,12 +295,12 @@ public class Atendimento implements Serializable {
         this.codorigem = codorigem;
     }
 
-    public TipoAtendimento getCodtipoatendimento() {
-        return codtipoatendimento;
+    public Avaliacao getCodavaliacao() {
+        return codavaliacao;
     }
 
-    public void setCodtipoatendimento(TipoAtendimento codtipoatendimento) {
-        this.codtipoatendimento = codtipoatendimento;
+    public void setCodavaliacao(Avaliacao codavaliacao) {
+        this.codavaliacao = codavaliacao;
     }
 
     @Override

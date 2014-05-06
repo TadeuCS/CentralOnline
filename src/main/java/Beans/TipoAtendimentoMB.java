@@ -6,9 +6,11 @@
 package Beans;
 
 import Model.TipoAtendimento;
+import Util.Manager;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,15 +18,14 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class TipoAtendimentoMB {
+public class TipoAtendimentoMB extends Manager {
 
     private TipoAtendimento tipoAtendimento = new TipoAtendimento();
 
-  
     public TipoAtendimentoMB() {
     }
-    
-      public TipoAtendimento getTipoAtendimento() {
+
+    public TipoAtendimento getTipoAtendimento() {
         return tipoAtendimento;
     }
 
@@ -32,25 +33,31 @@ public class TipoAtendimentoMB {
         this.tipoAtendimento = tipoTipoAtendimento;
     }
 
-//        public void Salvar() {
-//        try {
-//            tipoAtendimentoEJB.Salvar(tipoAtendimento);
-//            tipoAtendimento = new TipoAtendimento();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//    }
-//    
-//    public void Excluir(TipoAtendimento tipoAtendimento){
-//        try {
-//            tipoAtendimentoEJB.Excluir(tipoAtendimento);
-//            this.tipoAtendimento = new TipoAtendimento();
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//    }
-//    
-//    public List<TipoAtendimento> listaDeTipoAtendimentos(){
-//        return tipoAtendimentoEJB.listaTipoAtendimento();
-//    }
+    public void Salvar() {
+        try {
+
+            em.getTransaction().begin();
+            em.merge(tipoAtendimento);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void Excluir(TipoAtendimento tipoAtendimento) {
+        try {
+            em.getTransaction().begin();
+            em.remove(tipoAtendimento);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public List<TipoAtendimento> listaDeTipoAtendimentos() {
+        em.getTransaction().begin();
+        Query query = em.createNamedQuery("TipoAtendimento.findAll");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
 }

@@ -24,13 +24,13 @@
                             <h:outputText value="#{item.usuario}"/>
                         </p:column>
                         <p:column headerText="Abertos">
-                            <h:outputText value="#{usuarioMB.qtdeAtendimentosAbertos()}"/>
+                            <h:outputText value="#{usuarioMB.qtdeAtendimentosAbertos(item.usuario)}"/>
                         </p:column>
                         <p:column headerText="Concluídos">
-                            <h:outputText value="#{usuarioMB.qtdeAtendimentosConcluidos()}"/>
+                            <h:outputText value="#{usuarioMB.qtdeAtendimentosConcluidos(item.usuario)}"/>
                         </p:column>
                         <p:column headerText="Pendentes">
-                            <h:outputText value="#{usuarioMB.qtdeAtendimentosPendentes()}"/>
+                            <h:outputText value="#{usuarioMB.qtdeAtendimentosPendentes(item.usuario)}"/>
                         </p:column>
                     </p:dataTable>
                 </h:form>
@@ -38,4 +38,3 @@
         </ui:composition>
     </h:body>
 </html>
-

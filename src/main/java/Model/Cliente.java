@@ -101,8 +101,6 @@ public class Cliente implements Serializable {
     private Date dataAtualizacao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
     private List<Atendimento> atendimentoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientes")
-    private List<AplicativoClientes> aplicativoClienteList;
     @JoinColumn(name = "CODROTA", referencedColumnName = "CODROTA")
     @ManyToOne(optional = false)
     private Rota codrota;
@@ -110,6 +108,8 @@ public class Cliente implements Serializable {
     private List<Telefone> telefoneList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
     private List<Endereco> enderecoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codcliente")
+    private List<AplicativoCliente> aplicativoClienteList;
 
     public Cliente() {
     }
@@ -226,15 +226,6 @@ public class Cliente implements Serializable {
         this.atendimentoList = atendimentoList;
     }
 
-    @XmlTransient
-    public List<AplicativoClientes> getAplicativoClienteList() {
-        return aplicativoClienteList;
-    }
-
-    public void setAplicativoClienteList(List<AplicativoClientes> aplicativoClienteList) {
-        this.aplicativoClienteList = aplicativoClienteList;
-    }
-
     public Rota getCodrota() {
         return codrota;
     }
@@ -259,6 +250,15 @@ public class Cliente implements Serializable {
 
     public void setEnderecoList(List<Endereco> enderecoList) {
         this.enderecoList = enderecoList;
+    }
+
+    @XmlTransient
+    public List<AplicativoCliente> getAplicativoClienteList() {
+        return aplicativoClienteList;
+    }
+
+    public void setAplicativoClienteList(List<AplicativoCliente> aplicativoClienteList) {
+        this.aplicativoClienteList = aplicativoClienteList;
     }
 
     @Override

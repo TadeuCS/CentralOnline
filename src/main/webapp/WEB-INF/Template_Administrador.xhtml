@@ -25,26 +25,21 @@
                     <p:panel header="Bem Vindo Sr(a) #{request.remoteUser}" style="float: right;">
                         <h:panelGrid columns="2">
                             <h:panelGrid columns="1" style="text-align: center;float: right;">
-                                <p:graphicImage url="/resources/img/#{usuarioMB.alteraImagem(request.remoteUser)}.png" width="80" height="80"/>
+                                <p:graphicImage url="/resources/img/#{usuarioMB.alteraImagem(request.remoteUser)}" width="80" height="80"/>
                             </h:panelGrid>
-                            <h:panelGrid>
-                                <h:panelGroup>
-                                    <p:outputLabel value="Abertos:"/>
-                                    <p:outputLabel value="10000" />
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <p:outputLabel value="Concluídos:" />
-                                    <p:outputLabel value="10000"/>
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <p:outputLabel value="Pendentes:" />
-                                    <p:outputLabel value="10000" />
-                                </h:panelGroup>
-                                <h:panelGroup >
-                                    <p:button icon="ui-icon-pencil"/>
-                                    <p:button icon="ui-icon-power" outcome="/View/HomePage/Login.jsf" href="#{request.contextPath}/j_spring_security_logout" 
-                                              style="margin-left: 40%;margin-top: 10px; " />
-                                </h:panelGroup>
+                            <h:panelGrid columns="2" >
+                                <p:outputLabel value="Abertos:" />
+                                <p:outputLabel value="#{usuarioMB.qtdeAllAtendimentosAbertos()}" />
+                                <p:outputLabel value="Concluídos:" />
+                                <p:outputLabel value="#{usuarioMB.qtdeAllAtendimentosConcluidos()}"/>
+                                <p:outputLabel value="Pendentes:" />
+                                <p:outputLabel value="#{usuarioMB.qtdeAllAtendimentosPendentes()}" />
+                                <h:panelGrid columns="4">
+                                    <p:button icon="ui-icon-search"  outcome="/View/Util/AlterarImagem.jsf" title="Trocar Foto"/>
+                                    <p:button icon="ui-icon-unlocked" outcome="/View/Util/AlterarSenha.jsf" title="Trocar Senha"/>
+                                    <p:button icon="ui-icon-comment" outcome="/View/Util/Informacao.jsf" title="Lançar Informação"/>
+                                    <p:button icon="ui-icon-power" outcome="/View/HomePage/Login.jsf" href="#{request.contextPath}/j_spring_security_logout" title="Sair"/>
+                                </h:panelGrid>
                             </h:panelGrid>
                         </h:panelGrid>
                     </p:panel>

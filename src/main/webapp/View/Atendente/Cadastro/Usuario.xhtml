@@ -11,12 +11,12 @@
         <ui:composition template="#{administradorMB.trocaTemplates()}">
             <ui:define name="centro">
                 <h:form>
-                    <p:growl id="messages"/>
                     <p:panel header="Cadastro de Usuários" footer="" >
-                        <h:panelGrid columns="2" style="width: 100%;" >
+                        <p:growl id="msg" life="3000"/>
+                        <h:panelGrid columns="2">
                             <p:outputLabel value="Nome:" for="nome" style="float: right"/>
                             <p:inputText id="nome" value="#{usuarioMB.usuario.nome}" title="Nome" 
-                                         required="true" requiredMessage="Nome Inválido" style="width: 80%"/>
+                                         required="true" requiredMessage="Nome Inválido" style="width: 400px;" />
                             <p:outputLabel value="CPF:" for="cpf" style="float: right" />
                             <p:inputMask mask="999.999.999-99" id="cpf" value="#{usuarioMB.usuario.cpf}" title="Cpf" 
                                          required="true" requiredMessage="CPF/CNPJ Inválido" style="text-align: center"/>
@@ -24,31 +24,41 @@
                             <p:selectOneRadio id="sexo" value="#{usuarioMB.usuario.sexo}" label="Sexo" required="true" requiredMessage="Sexo Inválido"> 
                                 <f:selectItem itemLabel="Masculino" itemValue="M" /> 
                                 <f:selectItem itemLabel="Feminino" itemValue="F" />  
-                            </p:selectOneRadio>  
+                            </p:selectOneRadio>
                             <p:outputLabel value="Email:" for="email"  style="float: right"/>
                             <p:inputText id="email" value="#{usuarioMB.usuario.email}" title="Email" 
-                                         required="true" requiredMessage="Email Inválido" style="width: 40%;"/>
+                                         required="true" requiredMessage="Email Inválido"
+                                         validatorMessage="Email Invalido">
+                                <f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+" />
+                            </p:inputText>
                             <p:outputLabel value="Usuário:" for="usuario" style="float: right" />
                             <p:inputText id="usuario" value="#{usuarioMB.usuario.usuario}" title="Usuario" required="true" requiredMessage="Usuário"/>
+                            <p:outputLabel value="Tipo de Usuario:" for="codtipousuario"  style="float: right"/>
+                            <p:selectOneMenu id="codtipousuario" value="#{usuarioMB.tipoUsuario.codtipousuario}" required="true" requiredMessage="Tipo de Usuario Inválido">
+                                <f:selectItems value="#{tipoUsuarioMB.listaTipoUsuarios()}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo.codtipousuario}"/>
+                            </p:selectOneMenu>
                             <p:outputLabel value="Senha:" for="senha" style="float: right" />
                             <p:password id="senha" value="#{usuarioMB.usuario.senha}" title="Senha" required="true" requiredMessage="Senha Inválida"
                                         feedback="true" promptLabel="Informe uma Senha" weakLabel="Fraco"  
-                                        goodLabel="Bom" strongLabel="Forte"/>
+                                        goodLabel="Bom" strongLabel="Forte">
+                                <f:validateLength minimum="6" maximum="20"/>
+                            </p:password>
                             <p:outputLabel value="Confirma Senha:" for="confirmaSenha" style="float: right" />
                             <p:password id="confirmaSenha" value="#{usuarioMB.contraSenha}" required="true" requiredMessage="ContraSenha Inválida"
                                         feedback="true" promptLabel="Informe uma Senha" weakLabel="Fraco"  
-                                        goodLabel="Bom" strongLabel="Forte"/>
-                            <p:outputLabel value="Foto:" style="float: right" />
-                            <p:fileUpload value="#{usuarioMB.usuario.foto}" mode="simple" sizeLimit="40000" allowTypes="/(\.|\/)(png)$/" update="messages"/>  
-                            <p:outputLabel value="Tipo de Usuario:" for="codtipousuario" style="float: right" />
-                            <h:selectOneMenu id="codtipousuario" value="#{usuarioMB.usuario.codtipousuario.descricao}" required="true" requiredMessage="Tipo de Usuario Inválido" style="width: 150px;">
-                                <f:selectItems value="#{tipoUsuarioMB.listaDeTipoUsuarios()}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo.codtipousuario}"/>
-                            </h:selectOneMenu>
+                                        goodLabel="Bom" strongLabel="Forte">
+                                <f:validateLength minimum="6" maximum="20"/>
+                            </p:password>
+                            <p:outputLabel value="Bloqueado:" title="bloqueado" for="bloqueado" style="float: right"/> 
+                            <p:selectBooleanButton  id="bloqueado" value="#{usuarioMB.bloqueado}" onLabel="SIM" offLabel="NÃO"
+                                                    onIcon="ui-icon-check" offIcon="ui-icon-close" required="true" requiredMessage="Status obrigatorio"/>
                         </h:panelGrid>
+
+
                     </p:panel>
                     <h:panelGrid columns="2" style="float: right">
-                        <p:commandButton value="Cancelar"/>
-                        <p:commandButton value="Salvar" action="#{usuarioMB.salvar()}"/>
+                        <p:button value="Cancelar"/>
+                        <p:commandButton value="Salvar" action="#{usuarioMB.salva()}" ajax="false" update="msg"/>
                     </h:panelGrid>
                 </h:form>
             </ui:define>

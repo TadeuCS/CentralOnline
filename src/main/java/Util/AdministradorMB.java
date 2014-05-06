@@ -5,6 +5,7 @@
  */
 package Util;
 
+import Model.Usuario;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,27 +32,27 @@ public class AdministradorMB {
 
     public AdministradorMB() {
     }
-    public String trocaLink(){
-        FacesContext context= FacesContext.getCurrentInstance().getCurrentInstance();
-        ExternalContext external= context.getExternalContext();
-        HttpServletRequest request =(HttpServletRequest) external.getRequest();
-        if(request.isUserInRole("ROLE_SUPORTE")){
+
+    public String trocaLink() {
+        FacesContext context = FacesContext.getCurrentInstance().getCurrentInstance();
+        ExternalContext external = context.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) external.getRequest();
+        if (request.isUserInRole("ROLE_SUPORTE")) {
             return "View/Suporte/index.jsf";
-        }else
-        if(request.isUserInRole("ROLE_ATENDENTE")){
+        } else if (request.isUserInRole("ROLE_ATENDENTE")) {
             return "View/Atendente/index.jsf";
-        }else
-        if(request.isUserInRole("ROLE_ADMINISTRADOR")){
+        } else if (request.isUserInRole("ROLE_ADMINISTRADOR")) {
             return "View/Administrador/index.jsf";
-        }else
+        } else {
             return null;
+        }
     }
-    
+
     public void uparArquivo(FileUploadEvent event) throws IOException {
         try {
             UploadedFile arq = event.getFile();
             InputStream in = new BufferedInputStream(arq.getInputstream());
-            File file = new File("C:\\Users\\Tadeu\\Documents\\NetBeansProjects\\CentralOnline\\web\\resources\\img\\" + "Tadeu" + ".png");
+            File file = new File("/home/tadeu/Documentos/NetBeansProjects/CentralOnline/src/main/webapp/resources/img/" + "teste" + ".png");
 
             FileOutputStream fout = new FileOutputStream(file);
 
@@ -63,24 +64,23 @@ public class AdministradorMB {
                     + " foi salvo com Sucesso!");
             FacesContext.getCurrentInstance().addMessage("msgUpdate", msg);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            System.out.println(ex);
         }
     }
 
-    public String trocaTemplates(){
-        FacesContext context= FacesContext.getCurrentInstance().getCurrentInstance();
-        ExternalContext external= context.getExternalContext();
-        HttpServletRequest request =(HttpServletRequest) external.getRequest();
-        if(request.isUserInRole("ROLE_SUPORTE")){
+    public String trocaTemplates() {
+        FacesContext context = FacesContext.getCurrentInstance().getCurrentInstance();
+        ExternalContext external = context.getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) external.getRequest();
+        if (request.isUserInRole("ROLE_SUPORTE")) {
             return "/WEB-INF/Template_Suporte.xhtml";
-        }else
-        if(request.isUserInRole("ROLE_ATENDENTE")){
+        } else if (request.isUserInRole("ROLE_ATENDENTE")) {
             return "/WEB-INF/Template_Atendente.xhtml";
-        }else
-        if(request.isUserInRole("ROLE_ADMINISTRADOR")){
+        } else if (request.isUserInRole("ROLE_ADMINISTRADOR")) {
             return "/WEB-INF/Template_Administrador.xhtml";
-        }else
+        } else {
             return null;
+        }
     }
 
     public UploadedFile getFile() {

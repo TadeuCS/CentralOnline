@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
     @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario"),
     @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha"),
-    @NamedQuery(name = "Usuario.findByFoto", query = "SELECT u FROM Usuario u WHERE u.foto = :foto")})
+    @NamedQuery(name = "Usuario.findByFoto", query = "SELECT u FROM Usuario u WHERE u.foto = :foto"),
+    @NamedQuery(name = "Usuario.findByBloqueado", query = "SELECT u FROM Usuario u WHERE u.bloqueado = :bloqueado")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -77,7 +78,7 @@ public class Usuario implements Serializable {
     private String usuario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 255)
     @Column(name = "SENHA")
     private String senha;
     @Basic(optional = false)
@@ -85,6 +86,12 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "FOTO")
     private String foto;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "BLOQUEADO")
+    private Character bloqueado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
+    private List<Informacao> informacaoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
     private List<Atendimento> atendimentoList;
     @JoinColumn(name = "CODTIPOUSUARIO", referencedColumnName = "CODTIPOUSUARIO")
@@ -92,6 +99,8 @@ public class Usuario implements Serializable {
     private TipoUsuario codtipousuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
     private List<Log> logList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codusuario")
+    private List<Ponto> pontoList;
 
     public Usuario() {
     }
@@ -100,7 +109,7 @@ public class Usuario implements Serializable {
         this.codusuario = codusuario;
     }
 
-    public Usuario(Integer codusuario, String nome, String cpf, Character sexo, String email, String usuario, String senha, String foto) {
+    public Usuario(Integer codusuario, String nome, String cpf, Character sexo, String email, String usuario, String senha, String foto, Character bloqueado) {
         this.codusuario = codusuario;
         this.nome = nome;
         this.cpf = cpf;
@@ -109,6 +118,7 @@ public class Usuario implements Serializable {
         this.usuario = usuario;
         this.senha = senha;
         this.foto = foto;
+        this.bloqueado = bloqueado;
     }
 
     public Integer getCodusuario() {
@@ -175,6 +185,23 @@ public class Usuario implements Serializable {
         this.foto = foto;
     }
 
+    public Character getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(Character bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
+    @XmlTransient
+    public List<Informacao> getInformacaoList() {
+        return informacaoList;
+    }
+
+    public void setInformacaoList(List<Informacao> informacaoList) {
+        this.informacaoList = informacaoList;
+    }
+
     @XmlTransient
     public List<Atendimento> getAtendimentoList() {
         return atendimentoList;
@@ -199,6 +226,15 @@ public class Usuario implements Serializable {
 
     public void setLogList(List<Log> logList) {
         this.logList = logList;
+    }
+
+    @XmlTransient
+    public List<Ponto> getPontoList() {
+        return pontoList;
+    }
+
+    public void setPontoList(List<Ponto> pontoList) {
+        this.pontoList = pontoList;
     }
 
     @Override

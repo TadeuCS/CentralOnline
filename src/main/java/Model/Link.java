@@ -31,15 +31,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Link.findAll", query = "SELECT l FROM Link l"),
-    @NamedQuery(name = "Link.findByCodlinks", query = "SELECT l FROM Link l WHERE l.codlinks = :codlinks"),
+    @NamedQuery(name = "Link.findByCodlink", query = "SELECT l FROM Link l WHERE l.codlink = :codlink"),
     @NamedQuery(name = "Link.findByDescricao", query = "SELECT l FROM Link l WHERE l.descricao = :descricao")})
 public class Link implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "CODLINKS")
-    private Integer codlinks;
+    @Column(name = "CODLINK")
+    private Integer codlink;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
@@ -52,21 +52,21 @@ public class Link implements Serializable {
     public Link() {
     }
 
-    public Link(Integer codlinks) {
-        this.codlinks = codlinks;
+    public Link(Integer codlink) {
+        this.codlink = codlink;
     }
 
-    public Link(Integer codlinks, String descricao) {
-        this.codlinks = codlinks;
+    public Link(Integer codlink, String descricao) {
+        this.codlink = codlink;
         this.descricao = descricao;
     }
 
-    public Integer getCodlinks() {
-        return codlinks;
+    public Integer getCodlink() {
+        return codlink;
     }
 
-    public void setCodlinks(Integer codlinks) {
-        this.codlinks = codlinks;
+    public void setCodlink(Integer codlink) {
+        this.codlink = codlink;
     }
 
     public String getDescricao() {
@@ -88,7 +88,7 @@ public class Link implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (codlinks != null ? codlinks.hashCode() : 0);
+        hash += (codlink != null ? codlink.hashCode() : 0);
         return hash;
     }
 
@@ -99,7 +99,7 @@ public class Link implements Serializable {
             return false;
         }
         Link other = (Link) object;
-        if ((this.codlinks == null && other.codlinks != null) || (this.codlinks != null && !this.codlinks.equals(other.codlinks))) {
+        if ((this.codlink == null && other.codlink != null) || (this.codlink != null && !this.codlink.equals(other.codlink))) {
             return false;
         }
         return true;
@@ -107,7 +107,7 @@ public class Link implements Serializable {
 
     @Override
     public String toString() {
-        return "Model.Link[ codlinks=" + codlinks + " ]";
+        return "Model.Link[ codlink=" + codlink + " ]";
     }
     
 }

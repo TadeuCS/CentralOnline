@@ -6,9 +6,11 @@
 package Beans;
 
 import Model.Link;
+import Util.Manager;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.persistence.Query;
 
 /**
  *
@@ -16,13 +18,14 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class LinksMB {
-    private Link link= new Link();
-    
+public class LinksMB extends Manager {
+
+    private Link link = new Link();
+
     public LinksMB() {
 
     }
-    
+
     public Link getLink() {
         return link;
     }
@@ -30,12 +33,18 @@ public class LinksMB {
     public void setLink(Link link) {
         this.link = link;
     }
-    
-//    public void salvar(){
-//        linksEJB.Salvar(link);
-//    }
-//    
-//    public List<Link> listaLinks() {
-//        return linksEJB.listaLinks();
-//    }
+
+    public void salvar() {
+        em.getTransaction().begin();
+        em.merge(link);
+        em.getTransaction().commit();
+
+    }
+
+    public List<Link> listaLinks() {
+        em.getTransaction().begin();
+        Query query = em.createNamedQuery("Link.findAll");
+        em.getTransaction().commit();
+        return query.getResultList();
+    }
 }
